@@ -42,10 +42,10 @@ def draw_grid():
             
             # Fill the cell context based on data matrix state
             # Note to self: Get out of Jeremy's debt.
-            if grid_matrix[row][col] == 1:
+            if grid_matrix[row][col] == 1%3:
                 pygame.draw.rect(screen, BG_COLOR, rect)
                 draw_text("X", text_font, (43, 252, 3), x + 5, y + 5)
-            elif grid_matrix[row][col] == 1:
+            elif grid_matrix[row][col] == 2%3:
                 pygame.draw.rect(screen, ACTIVE_COLOR, rect)
                 draw_text("1", text_font, (43, 252, 3), x + 5, y + 5)
             else:
@@ -77,7 +77,7 @@ while running:
             
             if 0 <= clicked_col < NUM_COLS and 0 <= clicked_row < NUM_ROWS:
                 # Toggle data state (0 becomes 1, 1 becomes 0)
-                grid_matrix[clicked_row][clicked_col] ^= 1
+                grid_matrix[clicked_row][clicked_col] += 1
     
 
     # Drawing Operations
@@ -90,3 +90,4 @@ while running:
 
 pygame.quit()
 sys.exit()
+#And I
