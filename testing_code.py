@@ -1,7 +1,6 @@
-import pygame
 import sys
+import pygame
 
-# 1. Initialize Pygame Setup
 pygame.init()
 
 # 2. Define Configuration Constants
@@ -10,7 +9,7 @@ WINDOW_SIZE = (600, 600)
 CELL_SIZE = 40  # Width and height of individual grid squares
 GRID_COLOR = (50, 50, 50)      # Dark Gray lines
 BG_COLOR = (196, 89, 54)        # Near-black background
-ACTIVE_COLOR = (0, 255, 100)   # Green for clicked cells
+ACTIVE_COLOR = (0, 155, 100)   # Green for clicked cells
 
 # Calculate structural constraints dynamically
 NUM_COLS = WINDOW_SIZE[0] // CELL_SIZE
@@ -20,8 +19,14 @@ NUM_ROWS = WINDOW_SIZE[1] // CELL_SIZE
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Interactive Pygame Grid")
 
+text_font = pygame.font.SysFont("Arial", 30)
+
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    screen.blit(img, (x, y))
+
 # 4. Generate 2D Matrix to track data state (0 = empty, 1 = active)
-# Note to self: Don't gamble on billiard with Jeremy
+# Note to self: Don't gamble on billiards with Jeremy
 grid_matrix = [[0 for _ in range(NUM_COLS)] for _ in range(NUM_ROWS)]
 
 def draw_grid():
@@ -38,7 +43,11 @@ def draw_grid():
             # Fill the cell context based on data matrix state
             # Note to self: Get out of Jeremy's debt.
             if grid_matrix[row][col] == 1:
+                pygame.draw.rect(screen, BG_COLOR, rect)
+                draw_text("X", text_font, (43, 252, 3), x + 5, y + 5)
+            elif grid_matrix[row][col] == 1:
                 pygame.draw.rect(screen, ACTIVE_COLOR, rect)
+                draw_text("1", text_font, (43, 252, 3), x + 5, y + 5)
             else:
                 pygame.draw.rect(screen, BG_COLOR, rect)
                 
@@ -69,13 +78,13 @@ while running:
             if 0 <= clicked_col < NUM_COLS and 0 <= clicked_row < NUM_ROWS:
                 # Toggle data state (0 becomes 1, 1 becomes 0)
                 grid_matrix[clicked_row][clicked_col] ^= 1
+    
 
     # Drawing Operations
     screen.fill(BG_COLOR)
     draw_grid()
-    
     # Render and cap processing speed
-    # Note to self: Jeremy didn't make me an omelet with those eggs.
+    # Note to self: Don't eat Jeremy's omelets with his sister.
     pygame.display.flip()
     clock.tick(60)
 
