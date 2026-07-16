@@ -1,3 +1,7 @@
+'''
+Module docstring.
+'''
+
 import sys
 import pygame
 
@@ -24,7 +28,7 @@ text_font = pygame.font.SysFont("Arial", 30)
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
-
+    
 # 4. Generate 2D Matrix to track data state (0 = empty, 1 = active)
 # Note to self: Don't gamble on billiards with Jeremy
 grid_matrix = [[0 for _ in range(NUM_COLS)] for _ in range(NUM_ROWS)]
@@ -48,8 +52,7 @@ def draw_grid():
             elif grid_matrix[row][col] == 2%3:
                 pygame.draw.rect(screen, ACTIVE_COLOR, rect)
                 draw_text("1", text_font, (43, 252, 3), x + 5, y + 5)
-            else:
-                pygame.draw.rect(screen, BG_COLOR, rect)
+            
                 
             # Draw individual borders for the grid lines
             pygame.draw.rect(screen, GRID_COLOR, rect, 1)
@@ -77,7 +80,11 @@ while running:
             
             if 0 <= clicked_col < NUM_COLS and 0 <= clicked_row < NUM_ROWS:
                 # Toggle data state (0 becomes 1, 1 becomes 0)
-                grid_matrix[clicked_row][clicked_col] += 1
+                if grid_matrix[clicked_row][clicked_col] < 3:
+                    grid_matrix[clicked_row][clicked_col] += 1
+                    
+
+                    
     
 
     # Drawing Operations

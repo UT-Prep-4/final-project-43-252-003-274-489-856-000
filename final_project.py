@@ -195,4 +195,4 @@ runPyGame()
 
 
 
-print("There are two thing America got right: cars and freesom.")
+print("There are two thing America got right: cars and freedom.")
