@@ -4,6 +4,7 @@ Module docstring. #prime
 
 import sys #prime
 import pygame
+import random
 #prime
 pygame.init()
 
@@ -32,10 +33,26 @@ def draw_text(text, font, text_col, x, y):
 # 4. Generate 2D Matrix to track data state (0 = empty, 1 = active)
 # Note to self: Don't gamble on billiards with Jeremy
 grid_matrix = [[0 for _ in range(NUM_COLS)] for _ in range(NUM_ROWS)]
+mine_matrix = [[0 for _ in range(NUM_COLS)] for _ in range(NUM_ROWS)]
+
+
+def add_mines():
+    for i in range(47):
+        x = random.randint(1, NUM_COLS - 2)
+        y = random.randint(1, NUM_ROWS - 2)
+        mine_matrix[x+1][y-1]+= 1
+        mine_matrix[x+1][y]+= 1
+        mine_matrix[x+1][y+1]+= 1
+        mine_matrix[x][y-1]+= 1
+        mine_matrix[x][y+1]+= 1
+        mine_matrix[x-1][y-1]+= 1
+        mine_matrix[x-1][y]+= 1
+        mine_matrix[x-1][y+1]+= 1
+        mine_matrix[x][y] = 9
+
 
 def draw_grid():
     """Iterates through rows and columns to draw cells and outlines."""
-    draw_text("Hi", text_font, (43, 252, 3), 0, 0)
     for row in range(NUM_ROWS):
         for col in range(NUM_COLS):
             # Map grid position to raw pixel coordinates
@@ -52,7 +69,7 @@ def draw_grid():
                 draw_text("X", text_font, (43, 252, 3), x + 5, y + 5)
             elif grid_matrix[row][col] == 2:
                 pygame.draw.rect(screen, ACTIVE_COLOR, rect)
-                draw_text("1", text_font, (43, 252, 3), x + 5, y + 5)
+                draw_text(str(mine_matrix[row][col]), text_font, (43, 252, 3), x + 5, y + 5)
                 #Quackadilly Blip
             
                 
@@ -62,6 +79,8 @@ def draw_grid():
 # 5. Primary Game Loop
 clock = pygame.time.Clock()
 running = True
+
+add_mines()
 
 while running:
     # Event Management
@@ -101,3 +120,4 @@ while running:
 pygame.quit()
 sys.exit()
 #Steve Irwin R.I.P.
+#• — • •   • — • •   • — • •   • — • —   • • •   •   • — • •
